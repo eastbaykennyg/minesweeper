@@ -86,14 +86,16 @@ class MineSweeper
         new_x = x+space[0]
         new_y = y+space[1]
         if in_bounds?(new_x, new_y) && @board_arr[new_x][new_y] != "b"
-          @user_board[new_x][new_y] = @board_arr[new_x][new_y].to_s
-          if @board_arr[new_x][new_y] == 0
-            reveal_neighbors(new_x,new_y)
+          if @user_board[new_x][new_y] == @board_arr[new_x][new_y].to_s
+            next
           else
-            puts "test"
+            @user_board[new_x][new_y] = @board_arr[new_x][new_y].to_s
+            reveal_neighbors(new_x,new_y)
           end
         end
       end
+    else
+      return
     end
   end
 
