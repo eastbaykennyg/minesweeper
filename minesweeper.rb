@@ -57,7 +57,7 @@ class MineSweeper
   def play
     @user_choice = ""
     print_board("u")
-    until @user_choice == "q"
+    until @user_choice == "q" || flag_check == true
       puts "[R]eveal,[F]lag, or [Q]uit?"
       @user_choice = gets.chomp.downcase
       if @user_choice == "f" || @user_choice == "r"
@@ -75,6 +75,9 @@ class MineSweeper
       else
         puts "Invalid entry"
       end
+    end
+    if flag_check == true
+      puts "You da bomb!"
     end
   end
 
@@ -142,7 +145,11 @@ class MineSweeper
         return false
       end
     end
-    true
+    if @flag_arr.length == 10
+      true
+    else
+      false
+    end
   end
 
 
