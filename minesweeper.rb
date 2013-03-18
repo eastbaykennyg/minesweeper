@@ -131,8 +131,13 @@ class MineSweeper
   end
 
   def flag_set(x, y)
-    @user_board[x][y] = "F"
-    @flag_arr << [x, y]
+    if @user_board[x][y] != "F"
+      @user_board[x][y] = "F"
+      @flag_arr << [x, y]
+    else
+      @user_board[x][y] = "*"
+      @flag_arr.delete([x, y])
+    end
     print_board("u")
   end
 
