@@ -38,7 +38,7 @@ class MineSweeper
     ]
 
     @flag_arr = []
-
+    @user_choice = ""
     ## generating random bombs
     10.times do
       x = rand(9)
@@ -52,6 +52,30 @@ class MineSweeper
     end
 
 
+  end
+
+  def play
+    @user_choice = ""
+    print_board("u")
+    until @user_choice == "q"
+      puts "[R]eveal,[F]lag, or [Q]uit?"
+      @user_choice = gets.chomp.downcase
+      if @user_choice == "f" || @user_choice == "r"
+        puts "Enter your coordinates as (Row, Column):"
+        user_coor = gets.chomp.split(',')
+        x, y = user_coor[0].to_i, user_coor[1].to_i
+
+        if @user_choice == "f"
+          self.flag_set(x, y)
+        else @user_choice == "r"
+          self.reveal(x, y)
+        end
+      elsif @user_choice == "q"
+        puts "Thanks for playing"
+      else
+        puts "Invalid entry"
+      end
+    end
   end
 
   def in_bounds?(x,y)
@@ -74,6 +98,7 @@ class MineSweeper
     if @board_arr[x][y] == "b"
       puts "GAME OVER\n\n"
       print_board("b")
+      @user_choice = "q"
     elsif @board_arr[x][y] == 0  ## check adjacent cells if they contain bomb
       reveal_neighbors(x,y)
       print_board("u")
