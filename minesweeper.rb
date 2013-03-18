@@ -110,7 +110,14 @@ class MineSweeper
 
   ## checks user's flags when user has set all 10 of his/her flags
   def flag_check
+    @flag_arr.each do |flag|
 
+      x, y = flag[0], flag[1]
+      if @board_arr[x][y] != "b"
+        return false
+      end
+    end
+    true
   end
 
 
