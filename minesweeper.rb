@@ -68,15 +68,18 @@ class MineSweeper
     end
   end
 
-  # def reveal(x, y)
-  #   if @board_arr[x][y] == "b"
-  #     puts "Game Over"
-  #     print_board("b")
-  #   elsif            ## check adjacent cells if they contain bomb
-  #     print_board("u") if reveal_neighbors(x,y)
-  #   else             ## display # of adjacent bombs
-  #   end
-  # end
+  def reveal(x, y)
+    if @board_arr[x][y] == "b"
+      puts "GAME OVER\n\n"
+      print_board("b")
+    elsif @board_arr[x][y] == 0  ## check adjacent cells if they contain bomb
+      reveal_neighbors(x,y)
+      print_board("u")
+    else
+      @user_board[x][y] = @board_arr[x][y].to_s
+      print_board("u")
+    end
+  end
 
   def reveal_neighbors(x, y)    ## recursive until false
     #debugger
@@ -94,11 +97,8 @@ class MineSweeper
           end
         end
       end
-    else
-      return
     end
   end
-
 
 
 end
