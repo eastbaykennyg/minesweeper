@@ -37,6 +37,8 @@ class MineSweeper
       ["*","*","*","*","*","*","*","*","*"]
     ]
 
+    @flag_arr = []
+
     ## generating random bombs
     10.times do
       x = rand(9)
@@ -98,6 +100,17 @@ class MineSweeper
         end
       end
     end
+  end
+
+  def flag_set(x, y)
+    @user_board[x][y] = "F"
+    @flag_arr << [x, y]
+    print_board("u")
+  end
+
+  ## checks user's flags when user has set all 10 of his/her flags
+  def flag_check
+
   end
 
 
