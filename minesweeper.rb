@@ -13,7 +13,7 @@ class MineSweeper
   ]
 
   def initialize
-
+    # unnecessary white space
     @board_arr = [
       [0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0],
@@ -25,7 +25,7 @@ class MineSweeper
       [0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0]
     ]
-
+    # might be better to initialize these in a loop to minimize repitition
     @user_board = [
       ["*","*","*","*","*","*","*","*","*"],
       ["*","*","*","*","*","*","*","*","*"],
@@ -46,7 +46,9 @@ class MineSweeper
       y = rand(9)
       @board_arr[x][y] = "b"
       NEIGHBORS.each do |space|
+        # arguments need to be up against the method, no space in between
         if in_bounds? (x+space[0]),(y+space[1])
+          # give your vars some breathing room between operators
           @board_arr[x+space[0]][y+space[1]] += 1 unless @board_arr[x+space[0]][y+space[1]] == "b"
         end
       end
@@ -68,6 +70,7 @@ class MineSweeper
 
         if @user_choice == "f"
           self.flag_set(x, y)
+        # this else won't run -- else doesn't take a conditional case, use elsif
         else @user_choice == "r"
           self.reveal(x, y)
         end
@@ -79,6 +82,7 @@ class MineSweeper
         puts "Invalid entry"
       end
     end
+    # don't do == true, 'if flag_check' only checks if its true
     if flag_check == true
       puts "You da bomb!"
     end
@@ -86,6 +90,7 @@ class MineSweeper
 
   def save_game
     File.open("saved_game.yaml", "w") do |f|
+      # use YAML.dumps
       f.puts self.to_yaml
     end
   end
@@ -129,6 +134,7 @@ class MineSweeper
         new_y = y+space[1]
         if in_bounds?(new_x, new_y) && @board_arr[new_x][new_y] != "b"
           if @user_board[new_x][new_y] == @board_arr[new_x][new_y].to_s
+            # this can be put into a one liner "next if...", then you don't need the 'else'
             next
           else
             @user_board[new_x][new_y] = @board_arr[new_x][new_y].to_s
@@ -168,6 +174,7 @@ class MineSweeper
 end
 
 if ARGV.length > 0
+  # the variables aren't used, so you can just do YAML.load().play/MineSweeper.new.play
   m = YAML.load_file(ARGV.shift)
 else
   m = MineSweeper.new
