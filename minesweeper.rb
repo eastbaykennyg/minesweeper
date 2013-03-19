@@ -1,4 +1,5 @@
 require "debugger"
+require "yaml"
 class MineSweeper
   NEIGHBORS = [
     [-1, 1],
@@ -58,7 +59,7 @@ class MineSweeper
     @user_choice = ""
     print_board("u")
     until @user_choice == "q" || flag_check == true
-      puts "[R]eveal,[F]lag, or [Q]uit?"
+      puts "[R]eveal,[F]lag, [Q]uit, or [S]ave?"
       @user_choice = gets.chomp.downcase
       if @user_choice == "f" || @user_choice == "r"
         puts "Enter your coordinates as (Row, Column):"
@@ -70,6 +71,8 @@ class MineSweeper
         else @user_choice == "r"
           self.reveal(x, y)
         end
+      elsif @user_choice == "s"
+        save_game
       elsif @user_choice == "q"
         puts "Thanks for playing"
       else
@@ -78,6 +81,12 @@ class MineSweeper
     end
     if flag_check == true
       puts "You da bomb!"
+    end
+  end
+
+  def save_game
+    File.open("saved_game.yaml", "w") do |f|
+      f.puts self.to_yaml
     end
   end
 
@@ -156,6 +165,11 @@ class MineSweeper
       false
     end
   end
-
-
 end
+
+if ARGV.length > 0
+  m = YAML.load_file(ARGV.shift)
+else
+  m = MineSweeper.new
+end
+m.play
